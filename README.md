@@ -2,9 +2,9 @@
 继承QTableWidget，可将有父子关系的数据显示成类似QTreeWdiget的效果
 
 ## 如何使用
-OCTable* oc = new OCTable;
+OCTable* oc = new OCTable;\n
 
-QStringList header;
+QStringList header;\n
 header << "A" << "B" << "C" << "D";
 oc->setHeader(header);
 
