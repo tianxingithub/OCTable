@@ -2,19 +2,19 @@
 #include <QDebug>
 #include "OCTable.h"
 
-OCTable::OCTable()
+SF::OCTable::OCTable()
 {
 	this->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	QString style = "QHeaderView::section { background-color: #f0f2f5}";
 
 }
 
-OCTable::~OCTable()
+SF::OCTable::~OCTable()
 {
 
 }
 
-void OCTable::tableMsgSlot()
+void SF::OCTable::tableMsgSlot()
 {
 	int cur_row = this->currentRow();
 	QPushButton* btn = qobject_cast<QPushButton*>(sender());
@@ -60,10 +60,10 @@ void OCTable::tableMsgSlot()
 }
 
 
-void OCTable::addHead(const int queryCount, QStringList head, QVector<int>colorIndex, bool only)
+void SF::OCTable::addHead(const int queryCount, QStringList head, QVector<int>colorIndex, bool only)
 {
 	QPushButton* btn = new QPushButton(this);
-	connect(btn, &QPushButton::clicked, this, &OCTable::tableMsgSlot);
+	connect(btn, &QPushButton::clicked, this, &SF::OCTable::tableMsgSlot);
 	auto r_n = this->rowCount();
 	this->setRowCount(r_n + 1);
 
@@ -93,7 +93,7 @@ void OCTable::addHead(const int queryCount, QStringList head, QVector<int>colorI
 	}
 }
 
-void OCTable::fillData(QVector<QStringList> data, QVector<int> colorIndx)
+void SF::OCTable::fillData(QVector<QStringList> data, QVector<int> colorIndx)
 {
 	auto noHeadData = data.mid(1, data.size() - 1);
 	for (QStringList data : noHeadData)
@@ -113,7 +113,7 @@ void OCTable::fillData(QVector<QStringList> data, QVector<int> colorIndx)
 	}
 }
 
-void OCTable::showData(QVector<QStringList> data, QVector<int> colorIndx, int insertRow)
+void SF::OCTable::showData(QVector<QStringList> data, QVector<int> colorIndx, int insertRow)
 {
 	auto tdatas = data.mid(1, data.size() - 1);
 	auto r_n = insertRow;
@@ -136,7 +136,7 @@ void OCTable::showData(QVector<QStringList> data, QVector<int> colorIndx, int in
 	}
 }
 
-void OCTable::insertData(QVector<QStringList>data, QVector<int>colorIndex)
+void SF::OCTable::insertData(QVector<QStringList>data, QVector<int>colorIndex)
 {
 	auto size = data.size();
 	int a = this->colorCount();
@@ -154,7 +154,7 @@ void OCTable::insertData(QVector<QStringList>data, QVector<int>colorIndex)
 }
 
 
-void OCTable::hideData(QVector<QStringList>data)
+void SF::OCTable::hideData(QVector<QStringList>data)
 {
 	auto size = data.size();
 	if (size == 0 || size == 1) return;
@@ -166,7 +166,7 @@ void OCTable::hideData(QVector<QStringList>data)
 
 }
 
-void OCTable::setHeader(QStringList header)
+void SF::OCTable::setHeader(QStringList header)
 {
 	m_header = header;
 	this->setColumnCount(header.size()+1);

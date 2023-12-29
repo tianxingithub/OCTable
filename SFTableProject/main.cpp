@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     SFTableProject w;
 
-	OCTable* oc = new OCTable;
+	SF::OCTable* oc = new SF::OCTable;
 
 	w.setCentralWidget(oc);
 
