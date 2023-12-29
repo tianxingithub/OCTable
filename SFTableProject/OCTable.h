@@ -1,6 +1,7 @@
 #pragma once
 #include <QtWidgets>
 
+//! OCTable：OpenCloseTable
 class OCTable : public QTableWidget
 {
 public:
@@ -14,84 +15,66 @@ public:
 	};
 
 private:
-	int dataIndex{ 0 };
+	//! 查询结果索引
+	int m_dataIndex{ 0 };
+
+	//! 查询结果状态：展开、收缩、仅一个结果
 	QVector<STATE> m_DataStates;
+
+	//! 保存所有的查询结果
 	QVector<QVector<QStringList>> m_TableDatas;
+
+	//! 每次查询结果的高亮行
 	QVector<QVector<int>> m_TableDatasColorIndex;
+
+	//! 数据标题
+	QStringList m_header;
 
 private:
 	void tableMsgSlot();
 
 private:
-	//************************************
-	// Method:    addHead
-	// FullName:  OCTable::addHead
-	// Access:    private 
-	// Returns:   void
-	// Qualifier: 添加父节点
-	// Parameter: const int queryCount
-	// Parameter: QStringList data
-	// Parameter: QVector<int>colorIndex
-	// Parameter: bool only
-	//************************************
-	void addHead(const int queryCount, QStringList data, QVector<int>colorIndex, bool only);
+	void addHead(const int queryCount, QStringList head, QVector<int>colorIndex, bool only);
 
-	//************************************
-	// Method:    autoAddDatas
-	// FullName:  OCTable::autoAddDatas
-	// Access:    private 
-	// Returns:   void
-	// Qualifier: 响应insertDatas
-	// Parameter: QVector<QStringList> datas
-	// Parameter: QVector<int> colorIndx
-	//************************************
-	void autoAddDatas(QVector<QStringList> datas, QVector<int> colorIndx);
+	// 添加标题外的数据
+	void fillData(QVector<QStringList> data, QVector<int> colorIndx);
 
-	//************************************
-	// Method:    btnAddDatas
-	// FullName:  OCTable::btnAddDatas
-	// Access:    private 
-	// Returns:   void
-	// Qualifier: 子节点的隐藏、显示响应
-	// Parameter: QVector<QStringList> datas
-	// Parameter: QVector<int> colorIndx
-	// Parameter: int insertRow
-	//************************************
-	void btnAddDatas(QVector<QStringList> datas, QVector<int> colorIndx, int insertRow);
+	void showData(QVector<QStringList> data, QVector<int> colorIndx, int insertRow);
 
-	//************************************
-	// Method:    removeDatas
-	// FullName:  OCTable::removeDatas
-	// Access:    public 
-	// Returns:   void
-	// Qualifier: 隐藏子节点
-	// Parameter: QVector<QStringList>datas
-	//************************************
-	void removeDatas(QVector<QStringList>datas);
+	void hideData(QVector<QStringList>data);
 
 
+//! 已开放的接口名称不要改动。
+//! 若要改动，保留当前接口名称，新增改动后的接口。
 public:
-
-	//************************************
-	// Method:    insertDatas
-	// FullName:  OCTable::insertDatas
-	// Access:    public 
-	// Returns:   void
-	// Qualifier: 往table里面写入数据，datas[0]为父节点，其余为子节点
-	// Parameter: QVector<QStringList>datas
-	// Parameter: QVector<int>colorIndex。高亮显示的列，索引从0开始
-	//************************************
-	void insertDatas(QVector<QStringList>datas, QVector<int>colorIndex = QVector<int>());
-
 
 	//************************************
 	// Method:    setHeader
 	// FullName:  OCTable::setHeader
 	// Access:    public 
 	// Returns:   void
-	// Qualifier: 设置table的标题
+	// Qualifier:
 	// Parameter: QStringList header
 	//************************************
 	void setHeader(QStringList header);
+
+
+	//************************************
+	// Method:    insertData
+	// FullName:  OCTable::insertData
+	// Access:    public 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: QVector<QStringList>data。插入的数据
+	// Parameter: QVector<int>colorIndex。需要高亮显示的列索引，从0开始索引
+	//************************************
+	void insertData(QVector<QStringList>data, QVector<int>colorIndex = QVector<int>());
+
+
+	// delCountIndex 删除Table第几次查询结果
+	// void delData(int delCountIndex);
+	//! 1. 得到删除查询结果的行号
+	//! 2. 判断查询结果是展开还是收缩。展开先收缩起来，收缩则直接删除当前行。
+	//! 3. 从m_TableDatas删除索引的查询结果。删除元素之前，确保索引值有效，避免越界访问 QVector::remove(removeIndex);
 };
 

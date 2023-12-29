@@ -40,7 +40,7 @@ void OCTable::tableMsgSlot()
 		QString pic = QString("%1/images/table-close.png").arg(QApplication::applicationDirPath());
 		btn->setIcon(QIcon(pic));
 		m_DataStates[index] = CLOSE;
-		removeDatas(datas);
+		hideData(datas);
 		break;
 
 	}
@@ -49,7 +49,7 @@ void OCTable::tableMsgSlot()
 		QString pic = QString("%1/images/table-open.png").arg(QApplication::applicationDirPath());
 		btn->setIcon(QIcon(pic));
 		m_DataStates[index] = OPEN;
-		btnAddDatas(datas, colorIndex, cur_row);
+		showData(datas, colorIndex, cur_row);
 		break;
 	}
 	case ONLY:
@@ -60,7 +60,7 @@ void OCTable::tableMsgSlot()
 }
 
 
-void OCTable::addHead(const int queryCount, QStringList data, QVector<int>colorIndex, bool only)
+void OCTable::addHead(const int queryCount, QStringList head, QVector<int>colorIndex, bool only)
 {
 	QPushButton* btn = new QPushButton(this);
 	connect(btn, &QPushButton::clicked, this, &OCTable::tableMsgSlot);
@@ -82,9 +82,9 @@ void OCTable::addHead(const int queryCount, QStringList data, QVector<int>colorI
 	}
 	btn->setIcon(QIcon(pic));
 
-	for (int i = 0; i < data.size() && i < this->colorCount(); i++)
+	for (int i = 0; i < head.size() && i < this->colorCount(); i++)
 	{
-		QTableWidgetItem* item = new QTableWidgetItem(data[i]);
+		QTableWidgetItem* item = new QTableWidgetItem(head[i]);
 		if (colorIndex.contains(i))
 		{
 			item->setBackground(QColor(230, 240, 250));
@@ -93,10 +93,10 @@ void OCTable::addHead(const int queryCount, QStringList data, QVector<int>colorI
 	}
 }
 
-void OCTable::autoAddDatas(QVector<QStringList> datas, QVector<int> colorIndx)
+void OCTable::fillData(QVector<QStringList> data, QVector<int> colorIndx)
 {
-	auto tdatas = datas.mid(1, datas.size() - 1);
-	for (auto data : tdatas)
+	auto noHeadData = data.mid(1, data.size() - 1);
+	for (QStringList data : noHeadData)
 	{
 		auto r_n = this->rowCount();
 		this->setRowCount(r_n + 1);
@@ -113,9 +113,9 @@ void OCTable::autoAddDatas(QVector<QStringList> datas, QVector<int> colorIndx)
 	}
 }
 
-void OCTable::btnAddDatas(QVector<QStringList> datas, QVector<int> colorIndx, int insertRow)
+void OCTable::showData(QVector<QStringList> data, QVector<int> colorIndx, int insertRow)
 {
-	auto tdatas = datas.mid(1, datas.size() - 1);
+	auto tdatas = data.mid(1, data.size() - 1);
 	auto r_n = insertRow;
 
 	for (auto data : tdatas)
@@ -136,26 +136,27 @@ void OCTable::btnAddDatas(QVector<QStringList> datas, QVector<int> colorIndx, in
 	}
 }
 
-void OCTable::insertDatas(QVector<QStringList>datas, QVector<int>colorIndex)
+void OCTable::insertData(QVector<QStringList>data, QVector<int>colorIndex)
 {
-	auto size = datas.size();
+	auto size = data.size();
 	int a = this->colorCount();
 	if (size == 0) return;
-	m_TableDatas << datas;
+	m_TableDatas << data;
 	m_TableDatasColorIndex << colorIndex;
-	dataIndex++;
+	m_dataIndex++;
 
-	auto headData = datas[0];
+	QStringList head = data[0];
 	bool only = (size == 1 ? true : false);
-	addHead(dataIndex, headData, colorIndex, only);
 
-	autoAddDatas(datas, colorIndex);
+	addHead(m_dataIndex, head, colorIndex, only);
+
+	fillData(data, colorIndex);
 }
 
 
-void OCTable::removeDatas(QVector<QStringList>datas)
+void OCTable::hideData(QVector<QStringList>data)
 {
-	auto size = datas.size();
+	auto size = data.size();
 	if (size == 0 || size == 1) return;
 	int cur_row = this->currentRow()+1;
 	for (int i = 1; i < size; i++)
@@ -167,10 +168,11 @@ void OCTable::removeDatas(QVector<QStringList>datas)
 
 void OCTable::setHeader(QStringList header)
 {
+	m_header = header;
 	this->setColumnCount(header.size()+1);
-	QStringList tt;
-	tt << u8"ÐòºÅ" << header;
-	this->setHorizontalHeaderLabels(tt);
+	QStringList head;
+	head << u8"ÐòºÅ" << header;
+	this->setHorizontalHeaderLabels(head);
 	this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 

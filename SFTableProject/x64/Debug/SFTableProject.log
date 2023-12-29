@@ -1,7 +1,11 @@
 ﻿cl : 命令行 warning D9002: 忽略未知选项“-Zc:__cplusplus”
 cl : 命令行 warning D9002: 忽略未知选项“-Zc:__cplusplus”
+cl : 命令行 warning D9002: 忽略未知选项“-Zc:__cplusplus”
   OCTable.cpp
+  SFTableProject.cpp
 cl : 命令行 warning D9002: 忽略未知选项“-Zc:__cplusplus”
   main.cpp
+cl : 命令行 warning D9002: 忽略未知选项“-Zc:__cplusplus”
+  moc_SFTableProject.cpp
   SFTableProject.vcxproj -> E:\Repository\SFTableProject\x64\Debug\SFTableProject.exe
   SFTableProject.vcxproj -> E:\Repository\SFTableProject\x64\Debug\SFTableProject.pdb (Full PDB)
