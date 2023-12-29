@@ -1,12 +1,9 @@
-#include "SFTableProject.h"
-#include <QtWidgets/QApplication>
 #include "OCTable.h"
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    SFTableProject w;
+	QApplication a(argc, argv);
+	SFTableProject w;
 
 	SF::OCTable* table = new SF::OCTable;
 
