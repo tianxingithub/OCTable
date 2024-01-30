@@ -6,11 +6,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    SFTableProject w;
+//     SFTableProject w;
 
 	SF::OCTable* table = new SF::OCTable;
 
-	w.setCentralWidget(table);
+// 	w.setCentralWidget(table);
 
 	QStringList header;
 	header << "A" << "B" << "C" << "D";
@@ -24,10 +24,30 @@ int main(int argc, char *argv[])
 	QVector<int>highlight1; highlight1 << 0 << 2;
 	QVector<int>highlight2; highlight2 << 1;
 	table->insertData(data, highlight1);
+
+	d1 = QStringList(); d1 << "aa1" << "bb1" << "cc1" << "dd1";
+	d2 = QStringList(); d2 << "aa11" << "bb12" << "cc12" << "dd12";
+	d3 = QStringList(); d3 << "aa23" << "bb23" << "cc23" << "dd23";
+	data = QVector<QStringList>();
+	data << d1 << d2 << d3;
 	table->insertData(data);
+
+	data = QVector<QStringList>();
+	QStringList d; d << "A" << "B" << "C" << "D";
+	data << d;
+	table->insertData(data);
+
+
+	d1 = QStringList(); d1 << "aaa1" << "bbb1" << "ccc1" << "ddd1";
+	d2 = QStringList(); d2 << "aaa11" << "bbb12" << "ccc12" << "ddd12";
+	d3 = QStringList(); d3 << "aaa23" << "bbb23" << "ccc23" << "ddd23";
+	data = QVector<QStringList>();
+	data << d1 << d2 << d3;
 	table->insertData(data, highlight2);
 
 
-    w.show();
+	table->setFixedSize(700, 400);
+//     w.show();
+	table->show();
     return a.exec();
 }

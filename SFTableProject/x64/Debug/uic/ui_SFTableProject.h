@@ -22,25 +22,26 @@ QT_BEGIN_NAMESPACE
 class Ui_SFTableProjectClass
 {
 public:
+    QWidget *centralWidget;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
-    QWidget *centralWidget;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *SFTableProjectClass)
     {
         if (SFTableProjectClass->objectName().isEmpty())
             SFTableProjectClass->setObjectName(QString::fromUtf8("SFTableProjectClass"));
-        SFTableProjectClass->resize(600, 400);
-        menuBar = new QMenuBar(SFTableProjectClass);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        SFTableProjectClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(SFTableProjectClass);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        SFTableProjectClass->addToolBar(mainToolBar);
+        SFTableProjectClass->resize(830, 562);
         centralWidget = new QWidget(SFTableProjectClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         SFTableProjectClass->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(SFTableProjectClass);
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 830, 23));
+        SFTableProjectClass->setMenuBar(menuBar);
+        mainToolBar = new QToolBar(SFTableProjectClass);
+        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
+        SFTableProjectClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(SFTableProjectClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         SFTableProjectClass->setStatusBar(statusBar);

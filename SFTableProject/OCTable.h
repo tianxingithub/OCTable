@@ -1,6 +1,8 @@
 #pragma once
 #include <QtWidgets>
+#include <QMenu>
 
+class QSettings;
 //! OCTable：OpenCloseTable
 namespace SF {
 	class OCTable : public QTableWidget
@@ -22,6 +24,9 @@ namespace SF {
 		//! 查询结果状态：展开、收缩、仅一个结果
 		QVector<STATE> m_DataStates;
 
+		//! 查询结果的状态，是否被删除
+		QVector<bool> m_isExsit;
+
 		//! 保存所有的查询结果
 		QVector<QVector<QStringList>> m_TableDatas;
 
@@ -31,9 +36,26 @@ namespace SF {
 		//! 数据标题
 		QStringList m_header;
 
+		//! 右键菜单
+		QMenu* m_menu;
+
+		//! 默认保存文件夹
+		QSettings* m_settings;
+
 	private:
 		void tableMsgSlot();
 
+		// 鼠标悬浮item时显示信息
+		void itemEnteredSlot(QTableWidgetItem *item);
+
+		// 右键响应
+		void customContextMenuSlot();
+		void rightClickSlot(QTableWidgetItem* item);
+
+		void tableClearSlot();
+		void tableDeleteSlot();
+		void tableSaveSlot();
+		void tableOpenSlot();
 	private:
 		void addHead(const int queryCount, QStringList head, QVector<int>colorIndex, bool only);
 
